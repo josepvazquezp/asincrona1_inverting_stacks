@@ -24,15 +24,16 @@ Stack* newStack()
 
 void display(Stack *stack)
 {
-    Stack *focusNode = stack;
-    int i = focusNode->size;
+    Node *focusNode = stack->top;
+    int i = stack->size;
 
-    while(i != 0 && focusNode->top->prior != NULL)
+    while(i != 0 && focusNode != NULL)
     {
-        printf("%d\n", (int)(focusNode->top->data));
-        focusNode->top = focusNode->top->prior;
+        printf("%d ", *(int*)(focusNode->data));
+        focusNode = focusNode->prior;
         i--;
     }
+    printf("\n");
 }
 
 void push(Stack *stack, void *value)
@@ -70,4 +71,29 @@ void *peek(Stack *stack)
         return stack->top->data;
 
     return NULL;
+}
+
+void invertStack(Stack *s)
+{   
+    void *temp;
+    int i = 0;
+    int backup = s->size;
+    Node *focusNode = s->top;
+    int a[100];
+
+    while(focusNode != NULL)
+    {
+        a[i] = *(int*)focusNode->data;
+        focusNode= focusNode->prior ;
+        i++;
+    }
+
+    for(i = 0 ; i < backup ; i++)
+        pop(s);
+
+    for(i = 0 ; i < backup ; i++)
+    {
+        temp = &a[i];
+        push(s, temp);
+    }
 }

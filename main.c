@@ -2,10 +2,6 @@
 #include <stdlib.h>
 #include "stack.h"
 
-void invertStack(Stack *s)
-{
-}
-
 int main()
 {
     Stack *stack = newStack();
@@ -13,15 +9,15 @@ int main()
     
     for(int i=0; i<5;i++)
     {
-        push(stack, nums+i);
+        push(stack, nums + i);
     }
 
-    pop(stack); // perdemos el 5
-
-    while(peek(stack) != NULL)
-    {
-        printf("[%d]", *(int*)pop(stack));
-    }
+    display(stack);
+    
+    invertStack(stack);
+ 
+    display(stack);
+    
 
     return 0;
 }

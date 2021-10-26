@@ -13,4 +13,6 @@ void *pop(Stack *stack);
 void *peek(Stack *stack);
 void display(Stack *stack);
 
+void invertStack(Stack *s);
+
 #endif
