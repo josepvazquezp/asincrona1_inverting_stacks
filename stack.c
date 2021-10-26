@@ -69,6 +69,13 @@ void* peek(Stack* s)
   return s->head->data;
 }
 
+// estas funciones YA estan implementadas para su conveniencia (de nada)
+// si lo desean pueden implementar sus propios contenedores (ah hackers).
+
+Stack* newStack(); // inicializa un stack nuevo
+void*  pop(Stack *s);  // obtiene el siguiente elemento del stack. regresa NULL si este esta vacio.
+void   push(Stack *s, void *data); // agrega el elemento data al stack.
+void*  peek(Stack *s);  // obtiene el siguiente elemento del stack SIN ELIMINARLO. regresa NULL si este esta vacio.
 void invertStack(Stack *s)
 {   
     Stack *s2 = newStack();
