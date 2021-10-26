@@ -3,9 +3,9 @@
 
 typedef void* TYPE;
 
-typedef struct STRNODE Node;
+typedef struct node Node;
 
-typedef struct STRSTACK Stack;
+typedef struct stack Stack;
 
 Stack* newStack();
 void push(Stack *stack, void *value);

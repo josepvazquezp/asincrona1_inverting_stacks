@@ -71,15 +71,22 @@ void* peek(Stack* s)
 
 void invertStack(Stack *s)
 {   
-    Stack *s2 = s;
+    Stack *s2 = newStack();
+    Stack *s3 = newStack();
 
     while(peek(s) != NULL)
     {
         push(s2, pop(s));
     }
 
-    while(peek(s2) != NULL)
+    while (peek(s2) != NULL)
     {
-        push(s, pop(s2));
+        push(s3, pop(s2));
+    }
+    
+
+    while(peek(s3) != NULL)
+    {
+        push(s, pop(s3));
     }
 }
