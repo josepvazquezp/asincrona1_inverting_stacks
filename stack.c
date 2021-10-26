@@ -2,98 +2,84 @@
 #include <stdlib.h>
 #include "stack.h"
 
-struct STRNODE{
-    TYPE data;
-    struct STRNODE *prior;
-};
-
-struct STRSTACK{
-    struct STRNODE *top;
-    int size;
-};
-
-Stack* newStack()
+struct node
 {
-    Stack *newStack = malloc(sizeof(Stack));
+  void* data;
+  struct node* next;
+};
+typedef struct node Node;
 
-    newStack->top = NULL;
-    newStack->size = 0;
-
-    return newStack;
-}
+struct stack
+{
+  Node* head;
+};
+typedef struct stack Stack;
 
 void display(Stack *stack)
 {
-    Node *focusNode = stack->top;
-    int i = stack->size;
+    Node *focusNode = stack->head;
 
-    while(i != 0 && focusNode != NULL)
+    while(focusNode != NULL)
     {
         printf("%d ", *(int*)(focusNode->data));
-        focusNode = focusNode->prior;
-        i--;
+        focusNode = focusNode->next;
     }
     printf("\n");
 }
 
-void push(Stack *stack, void *value)
+Stack* newStack()
 {
-    Node *newNode = malloc(sizeof(Node));
-    newNode->data = value;
-    newNode->prior = stack->top;
-
-    stack->size += 1;
-    stack->top = newNode;
+  Stack *s = malloc(sizeof(Stack));
+  s->head = NULL;
+  return s;
 }
 
-void *pop(Stack *stack)
+Node* newNode(void *data)
 {
-    if(stack->size != 0)
-    {
-        Node *temp = stack->top;
-        void *n = stack->top->data;
-
-        stack->top = stack->top->prior;
-        free(temp);
-        stack->size--;
-
-        return n;
-    }
-    else
-        return NULL;
+  Node* n = malloc(sizeof(Node));
+  n->data = data;
+  n->next = NULL;
+  return n;
 }
 
-void *peek(Stack *stack)
+void push(Stack* s, void* data)
 {
-    if(stack == NULL)
-        printf("Esta vacia\n");
-    else
-        return stack->top->data;
+  Node* n = newNode(data);
+  n->next = s->head;
+  s->head = n;
+}
 
+void* pop(Stack* s)
+{
+  if(s->head == NULL)
     return NULL;
+
+  Node* toDel = s->head;
+  void* toRet = s->head->data;
+  s->head = s->head->next;
+  free(toDel);
+
+  return toRet;
+}
+
+void* peek(Stack* s)
+{
+  if(s->head == NULL)
+    return NULL;
+  return s->head->data;
 }
 
 void invertStack(Stack *s)
 {   
-    void *temp;
-    int i = 0;
-    int backup = s->size;
-    Node *focusNode = s->top;
-    int a[100];
+    Stack *s2 = s;
 
-    while(focusNode != NULL)
+    while(peek(s) != NULL)
     {
-        a[i] = *(int*)focusNode->data;
-        focusNode= focusNode->prior ;
-        i++;
+        push(s2, pop(s));
     }
 
-    for(i = 0 ; i < backup ; i++)
-        pop(s);
-
-    for(i = 0 ; i < backup ; i++)
+    while(peek(s2) != NULL)
     {
-        temp = &a[i];
-        push(s, temp);
+        push(s, pop(s2));
     }
 }
